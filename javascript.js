@@ -215,111 +215,43 @@ $(document).ready(function () {
             $("#time").show();
             timer = 10;
             // if over 6 correct this shows
-            if ((questions === undefined || questions.length == 0 && correctAnswers > 6)) {
-                $("#questions").empty();
+            if (correctAnswers > 6) {
                 $("#questions").html("<h2>You are the Trivia Master. </h2>");
-                $("#answers").append("<h3>Answered Correctly: " + correctAnswers + "</h43>");
-                $("#answers").append("<h3>Answered Incorrectly: " + wrongAnswers + "</h3>");
-                $("#answers").append("<h3>Too Lazy to Click: " + notAnswered + "</h3>");
                 $("#answers").append("<img src=" + winnerPhoto.photo + ">");
-                $("#reset").show();
-                $("#time").hide();
-                correctAnswers = 0;
-                wrongAnswers = 0;
-                notAnswered = 0;
+                showResult();
                 // if over 6 wrong this shows
-            } else if ((wrongAnswers + correctAnswers + notAnswered) === qCount && wrongAnswers > 6) {
-                $("#questions").empty();
+            } else if (wrongAnswers > 6) {
                 $("#questions").html("<h2>You are not good at trivia.</h2>");
-                $("#answers").append("<h4>Answered Correctly: " + correctAnswers + "</h4>");
-                $("#answers").append("<h4>Answered Incorrectly: " + wrongAnswers + "</h4>");
-                $("#answers").append("<h4>Too Lazy to Click: " + notAnswered + "</h4>");
                 $("#answers").append("<img src=" + loserPhoto.photo + ">");
-                $("#reset").show();
-                $("#time").hide();
-                correctAnswers = 0;
-                wrongAnswers = 0;
-                notAnswered = 0;
+                showResult();
+
                 // if over 6 not answered this shows
-            } else if ((wrongAnswers + correctAnswers + notAnswered) === qCount && notAnswered > 6) {
-                $("#questions").empty();
+            } else if (notAnswered > 6) {
                 $("#questions").html("<h2>Is anyone even playing this game?</h2>");
-                $("#answers").append("<h4>Answered Correctly: " + correctAnswers + "</h4>");
-                $("#answers").append("<h4>Answered Incorrectly: " + wrongAnswers + "</h4>");
-                $("#answers").append("<h4>Too Lazy to Click: " + notAnswered + "</h4>");
                 $("#answers").append("<img src=" + noAnswerPhoto.photo + ">");
-                $("#reset").show();
-                $("#time").hide();
-                correctAnswers = 0;
-                wrongAnswers = 0;
-                notAnswered = 0;
+                showResult();
             } else {
                 runTimer();
                 displayQuestion();
             }
         }, 5000);
     }
+    
+    function showResult() {
+        $("#questions").show();
+        $("#answers").append("<h3>Answered Correctly: " + correctAnswers + "</h3>");
+        $("#answers").append("<h3>Answered Incorrectly: " + wrongAnswers + "</h3>");
+        $("#answers").append("<h3>Too Lazy to Click: " + notAnswered + "</h3>");
+        $("#reset").show();
+        $("#time").hide();
+        correctAnswers = 0;
+        wrongAnswers = 0;
+        notAnswered = 0;
+    }
 
-    // I need this working correctly!!!!!!!!!!!!!!!!!!!!!!
-    // // // loser pic function
-    // function loserImg() {
-    //     index = Math.floor(Math.random() * incorrectPhotos.length);
-    //     loserPick = incorrectPhotos[index];
 
 
-    //     $("#answers").append("<img src=" + loserPick.photo + ">");
-    //     newArray.push(loserPick);
-    //     incorrectPhotos.splice(index, 1);
-    //     $("#time").hide();
-    //     byePic = setTimeout(function () {
-    //         $("#answers").empty();
-    //         $("#time").show();
-    //         timer = 10;
-    //         // if over 6 correct this shows
-    //         if ((wrongAnswers + correctAnswers + notAnswered) === qCount && correctAnswers > 6) {
-    //             $("#questions").empty();
-    //             $("#questions").html("<h2>You are the Trivia Master. </h2>");
-    //             $("#answers").append("<h4>Answered Correctly: " + correctAnswers + "</h4>");
-    //             $("#answers").append("<h4>Answered Incorrectly: " + wrongAnswers + "</h4>");
-    //             $("#answers").append("<h4>Too Lazy to Click: " + notAnswered + "</h4>");
-    //             $("#answers").append("<img src=" + winnerPhoto.photo + ">");
-    //             $("#reset").show();
-    //             $("#time").hide();
-    //             correctAnswers = 0;
-    //             wrongAnswers = 0;
-    //             notAnswered = 0;
-    //             // if over 6 wrong this shows
-    //         } else if ((wrongAnswers + correctAnswers + notAnswered) === qCount && wrongAnswers > 6) {
-    //             $("#questions").empty();
-    //             $("#questions").html("<h2>You are not good at trivia.</h2>");
-    //             $("#answers").append("<h4>Answered Correctly: " + correctAnswers + "</h4>");
-    //             $("#answers").append("<h4>Answered Incorrectly: " + wrongAnswers + "</h4>");
-    //             $("#answers").append("<h4>Too Lazy to Click: " + notAnswered + "</h4>");
-    //             $("#answers").append("<img src=" + loserPhoto.photo + ">");
-    //             $("#reset").show();
-    //             $("#time").hide();
-    //             correctAnswers = 0;
-    //             wrongAnswers = 0;
-    //             notAnswered = 0;
-    //             // if over 6 not answered this shows
-    //         } else if ((wrongAnswers + correctAnswers + notAnswered) === qCount && notAnswered > 6) {
-    //             $("#questions").empty();
-    //             $("#questions").html("<h2>Is anyone even playing this game?</h2>");
-    //             $("#answers").append("<h4>Answered Correctly: " + correctAnswers + "</h4>");
-    //             $("#answers").append("<h4>Answered Incorrectly: " + wrongAnswers + "</h4>");
-    //             $("#answers").append("<h4>Too Lazy to Click: " + notAnswered + "</h4>");
-    //             $("#answers").append("<img src=" + noAnswerPhoto.photo + ">");
-    //             $("#reset").show();
-    //             $("#time").hide();
-    //             correctAnswers = 0;
-    //             wrongAnswers = 0;
-    //             notAnswered = 0;
-    //         } else {
-    //             runTimer();
-    //             displayQuestion();
-    //         }
-    //     }, 5000);
-    // }
+
 
     // reset the game
     $("#reset").on("click", function () {
