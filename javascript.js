@@ -109,7 +109,7 @@ $(document).ready(function () {
     notAnswered = 0,
     userGuess = "",
     running = false,
-    qCount = questions.length,
+    // qCount = questions.length,
     pick,
     index,
     newArray = [],
@@ -173,7 +173,8 @@ $(document).ready(function () {
     $("#start").hide();
     playAudio();
     displayQuestion();
-    runTimer();
+      runTimer();
+      
     // pushes random question to questionSpot
     for (let i = 0; i < questions.length; i++) {
       questionSpot.push(questions[i]);
@@ -221,7 +222,7 @@ $(document).ready(function () {
             pick.choice[pick.answer] +
             "</h2>"
         );
-        // loserImg();
+        loserImg();
         hidePicture();
       }
     });
@@ -261,7 +262,9 @@ $(document).ready(function () {
     $("#answers").append("<img src=" + pick.photo + ">");
     newArray.push(pick);
     questions.splice(index, 1);
-    $("#time").hide();
+      $("#time").hide();
+      
+
     byePic = setTimeout(() => {
       $("#answers").empty();
       $("#time").show();
@@ -288,6 +291,30 @@ $(document).ready(function () {
       }
     }, 5000);
   }
+    
+    
+    endofGame = () => {
+         // if over 6 correct this shows
+        if (correctAnswers > 6) {
+            $("#questions").html("<h2>You are the Trivia Master. </h2>");
+            $("#answers").append("<img src=" + winnerPhoto.photo + ">");
+            showResult();
+            // if over 6 wrong this shows
+          } else if (wrongAnswers > 6) {
+            $("#questions").html("<h2>You are not good at trivia.</h2>");
+            $("#answers").append("<img src=" + loserPhoto.photo + ">");
+            showResult();
+    
+            // if over 6 not answered this shows
+          } else if (notAnswered > 6) {
+            $("#questions").html("<h2>Is anyone even playing this game?</h2>");
+            $("#answers").append("<img src=" + noAnswerPhoto.photo + ">");
+            showResult();
+          } else {
+            runTimer();
+            displayQuestion();
+          }
+    }
 
     //changed to arrow function
   showResult = () => {
