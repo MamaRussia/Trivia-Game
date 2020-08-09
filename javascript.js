@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // How can I add images that show when answer is not correct
-    var questions = [{
+    let questions = [{
             question: "By law, what is banned in Japanese restaurants?",
             choice: ["Talking", "Smiling", "Tipping", "Farting"],
             answer: 2,
@@ -62,33 +62,36 @@ $(document).ready(function () {
         }
     ]
     // function to play sound
-    var x = document.getElementById("myAudio"); 
+    let x = document.getElementById("myAudio"); 
 
-    function playAudio() { 
-      x.play(); 
-    } 
-    var correctAnswers = 0;
-    var wrongAnswers = 0;
-    var notAnswered = 0;
-    var userGuess = "";
-    var running = false;
-    var qCount = questions.length;
-    var pick;
-    var index;
-    var newArray = [];
-    var questionSpot = [];
-    var timer = 10;
-    var intervalId;
-    var winnerPhoto = {
+    // function playAudio() { 
+    //   x.play(); 
+    // } 
+
+    //changed to arrow function
+    playAudio = () => {
+    x.play()
+}
+
+    let correctAnswers = 0, wrongAnswers = 0, notAnswered = 0, userGuess = "", running = false, qCount = questions.length, pick, index, newArray = [], questionSpot = [], timer = 10, intervalId;
+
+    //Photo for winning game
+    let winnerPhoto = {
         photo: "assets/images/winner.gif"
     };
-    var loserPhoto = {
+
+    //Photo for losing game
+    let loserPhoto = {
         photo: "assets/images/losegame.gif"
     };
-    var noAnswerPhoto = {
+
+    //Photo for no answer to question
+    let noAnswerPhoto = {
         photo: "assets/images/noanswer.gif"
     };
-    var incorrectPhotos = [{
+
+    //Photos for wrong answer to question
+    let incorrectPhotos = [{
             photo: "assets/images/incorrect1.gif"
         },
         {
