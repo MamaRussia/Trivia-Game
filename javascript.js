@@ -178,7 +178,7 @@ $(document).ready(function () {
   displayQuestion = () => {
 
     // generate random index in array
-    index = Math.floor(questions.length);
+    index = Math(questions.length);
 
       console.log(questions.length);
 
