@@ -1,6 +1,69 @@
 $(document).ready(function () {
-  //Questions that are randomly selected
-  let questions = [
+  playAudio = () => {
+    x.play();
+  }; 
+   const x = document.getElementById("myAudio"),
+    //variables used
+    correctAnswers = 0,
+    wrongAnswers = 0,
+    notAnswered = 0,
+    userGuess = "",
+    running = false,
+    pick,
+    index,
+    newArray = [],
+    questionSpot = [],
+    timer = 10,
+    intervalId,
+    //Photo for winning game
+    winnerPhoto = {
+      photo: "assets/images/winner.gif",
+    },
+    //Photo for losing game
+    loserPhoto = {
+      photo: "assets/images/losegame.gif",
+    },
+    //Photo for no answer to question
+    noAnswerPhoto = {
+      photo: "assets/images/noanswer.gif",
+    };
+    //Photos for wrong answer to question
+    const incorrectPhotos = [
+      {
+        photo: "assets/images/incorrect1.gif",
+      },
+      {
+        photo: "assets/images/incorrect2.gif",
+      },
+      {
+        photo: "assets/images/incorrect3.gif",
+      },
+      {
+        photo: "assets/images/incorrect4.gif",
+      },
+      {
+        photo: "assets/images/incorrect5.gif",
+      },
+      {
+        photo: "assets/images/incorrect6.gif",
+      },
+      {
+        photo: "assets/images/incorrect7.gif",
+      },
+      {
+        photo: "assets/images/incorrect8.gif",
+      },
+      {
+        photo: "assets/images/incorrect9.gif",
+      },
+      {
+        photo: "assets/images/incorrect10.gif",
+      },
+    ];
+
+
+//Questions that are randomly selected
+  const questions = [
     {
       question: "By law, what is banned in Japanese restaurants?",
       choice: ["Talking", "Smiling", "Tipping", "Farting"],
@@ -91,80 +154,7 @@ $(document).ready(function () {
       photo: "assets/images/greeneggs.gif",
     },
   ];
-  // function to play sound
-  let x = document.getElementById("myAudio");
 
-  // function playAudio() {
-  //   x.play();
-  // }
-
-  //changed to arrow function
-  playAudio = () => {
-    x.play();
-  };
-
-  //variables used
-  let correctAnswers = 0,
-    wrongAnswers = 0,
-    notAnswered = 0,
-    userGuess = "",
-    running = false,
-    // qCount = questions.length,
-    pick,
-    index,
-    newArray = [],
-    questionSpot = [],
-    timer = 10,
-    intervalId;
-
-  //Photo for winning game
-  let winnerPhoto = {
-    photo: "assets/images/winner.gif",
-  };
-
-  //Photo for losing game
-  let loserPhoto = {
-    photo: "assets/images/losegame.gif",
-  };
-
-  //Photo for no answer to question
-  let noAnswerPhoto = {
-    photo: "assets/images/noanswer.gif",
-  };
-
-  //Photos for wrong answer to question
-  let incorrectPhotos = [
-    {
-      photo: "assets/images/incorrect1.gif",
-    },
-    {
-      photo: "assets/images/incorrect2.gif",
-    },
-    {
-      photo: "assets/images/incorrect3.gif",
-    },
-    {
-      photo: "assets/images/incorrect4.gif",
-    },
-    {
-      photo: "assets/images/incorrect5.gif",
-    },
-    {
-      photo: "assets/images/incorrect6.gif",
-    },
-    {
-      photo: "assets/images/incorrect7.gif",
-    },
-    {
-      photo: "assets/images/incorrect8.gif",
-    },
-    {
-      photo: "assets/images/incorrect9.gif",
-    },
-    {
-      photo: "assets/images/incorrect10.gif",
-    },
-  ];
   // hides the reset button
   $("#reset").hide();
 
@@ -173,20 +163,24 @@ $(document).ready(function () {
     $("#start").hide();
     playAudio();
     displayQuestion();
-      runTimer();
-      
+    runTimer();
+
     // pushes random question to questionSpot
     for (let i = 0; i < questions.length; i++) {
       questionSpot.push(questions[i]);
+      if (questions[i]=== 0) {
+        endofGame();
+      }
     }
   });
   // display question function
-    //changed to arrow function
+  //changed to arrow function
   displayQuestion = () => {
-    console.log(questions);
 
     // generate random index in array
-    index = Math.floor(Math.random() * questions.length);
+    index = Math.floor(questions.length);
+
+      console.log(questions.length);
 
     console.log("index : " + index);
 
@@ -197,36 +191,40 @@ $(document).ready(function () {
       let userPick = $("<div>");
       userPick.addClass("answerchoices");
       userPick.html(pick.choice[i]);
+
       // assign array position so answer can be checked
-      console.log(pick.answer);
+      //   console.log(pick.answer);
       userPick.attr("data-guessvalue", i);
       $("#answers").append(userPick);
     }
-    // function for when answer clicked
-    $(".answerchoices").on("click", function () {
-      // userPick array position
-      userGuess = parseInt($(this).attr("data-guessvalue"));
-      // right or wrong answer scenarios
-      if (userGuess === pick.answer) {
-        stop();
-        correctAnswers++;
-        userGuess = "";
-        $("#answers").html("<h2>Correct! Nice job.</h2>");
-        hidePicture();
-      } else {
-        stop();
-        wrongAnswers++;
-        userGuess = "";
-        $("#answers").html(
-          "<h2>Incorrect. The correct answer is " +
-            pick.choice[pick.answer] +
-            "</h2>"
-        );
-        loserImg();
-        hidePicture();
-      }
-    });
-  }
+  };
+
+  // function for when answer clicked
+  $(".answerchoices").on("click", function () {
+    // userPick array position
+    userGuess = parseInt($(this).attr("data-guessvalue"));
+
+    // right or wrong answer scenarios
+    if (userGuess === pick.answer) {
+      stop();
+      correctAnswers++;
+      userGuess = "";
+      $("#answers").html("<h2>Correct! Nice job.</h2>");
+      hidePicture();
+    } else {
+      stop();
+      wrongAnswers++;
+      userGuess = "";
+      $("#answers").html(
+        "<h2>Incorrect. The correct answer is " +
+          pick.choice[pick.answer] +
+          "</h2>"
+      );
+      loserImg();
+      hidePicture();
+    }
+  });
+
   // timer function
   function runTimer() {
     if (!running) {
@@ -262,61 +260,39 @@ $(document).ready(function () {
     $("#answers").append("<img src=" + pick.photo + ">");
     newArray.push(pick);
     questions.splice(index, 1);
-      $("#time").hide();
-      
+    $("#time").hide();
 
     byePic = setTimeout(() => {
       $("#answers").empty();
       $("#time").show();
       timer = 10;
-      // if over 6 correct this shows
-      if (correctAnswers > 6) {
-        $("#questions").html("<h2>You are the Trivia Master. </h2>");
-        $("#answers").append("<img src=" + winnerPhoto.photo + ">");
-        showResult();
-        // if over 6 wrong this shows
-      } else if (wrongAnswers > 6) {
-        $("#questions").html("<h2>You are not good at trivia.</h2>");
-        $("#answers").append("<img src=" + loserPhoto.photo + ">");
-        showResult();
-
-        // if over 6 not answered this shows
-      } else if (notAnswered > 6) {
-        $("#questions").html("<h2>Is anyone even playing this game?</h2>");
-        $("#answers").append("<img src=" + noAnswerPhoto.photo + ">");
-        showResult();
-      } else {
-        runTimer();
-        displayQuestion();
-      }
     }, 5000);
   }
-    
-    
-    endofGame = () => {
-         // if over 6 correct this shows
-        if (correctAnswers > 6) {
-            $("#questions").html("<h2>You are the Trivia Master. </h2>");
-            $("#answers").append("<img src=" + winnerPhoto.photo + ">");
-            showResult();
-            // if over 6 wrong this shows
-          } else if (wrongAnswers > 6) {
-            $("#questions").html("<h2>You are not good at trivia.</h2>");
-            $("#answers").append("<img src=" + loserPhoto.photo + ">");
-            showResult();
-    
-            // if over 6 not answered this shows
-          } else if (notAnswered > 6) {
-            $("#questions").html("<h2>Is anyone even playing this game?</h2>");
-            $("#answers").append("<img src=" + noAnswerPhoto.photo + ">");
-            showResult();
-          } else {
-            runTimer();
-            displayQuestion();
-          }
-    }
 
-    //changed to arrow function
+  endofGame = () => {
+    // if over 6 correct this shows
+    if (correctAnswers > 9) {
+      $("#questions").html("<h2>You are the Trivia Master. </h2>");
+      $("#answers").append("<img src=" + winnerPhoto.photo + ">");
+      showResult();
+      // if over 6 wrong this shows
+    } else if (wrongAnswers > 6) {
+      $("#questions").html("<h2>You are not good at trivia.</h2>");
+      $("#answers").append("<img src=" + loserPhoto.photo + ">");
+      showResult();
+
+      // if over 6 not answered this shows
+    } else if (notAnswered > 6) {
+      $("#questions").html("<h2>Is anyone even playing this game?</h2>");
+      $("#answers").append("<img src=" + noAnswerPhoto.photo + ">");
+      showResult();
+    } else {
+      runTimer();
+      displayQuestion();
+    }
+  };
+
+  //changed to arrow function
   showResult = () => {
     $("#questions").show();
     $("#answers").append("<h3>Answered Correctly: " + correctAnswers + "</h3>");
@@ -327,7 +303,7 @@ $(document).ready(function () {
     correctAnswers = 0;
     wrongAnswers = 0;
     notAnswered = 0;
-  }
+  };
 
   // reset the game
   $("#reset").on("click", function () {
