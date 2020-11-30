@@ -5,15 +5,7 @@ $(document).ready(function () {
   function playAudio() {
     x.play();
   }
-  let correctAnswers = 0;
-  let wrongAnswers = 0;
-  let notAnswered = 0;
-  let userGuess = "";
-  let running = false;
-  let newArray = [];
-  let questionSpot = [];
-  let timer = 10;
-  let intervalId;
+  
 
   let winnerPhoto = {
     photo: "assets/images/winner.gif",
@@ -148,6 +140,15 @@ $(document).ready(function () {
     },
   ];
 
+  let correctAnswers = 0;
+  let wrongAnswers = 0;
+  let notAnswered = 0;
+  let userGuess = "";
+  let running = false;
+  let newArray = [];
+  let timer = 10;
+  let intervalId;
+
   // questions.forEach(function (e) {
   //     console.log(e);
   // })
@@ -166,20 +167,21 @@ $(document).ready(function () {
     // }
   });
 
-  console.log(questions);
+  // console.log(questions);
 
   // display question function
   function displayQuestion() {
     console.log(questions);
 
     // generate random index in array
-    index = Math.floor(Math.random() * questions.length); // console.log(questions.splice());
+    const index = Math.floor(questions.length - 1); // console.log(questions.splice());
     pick = questions[index];
     questions.splice(index, 1);
+    console.log(questions.question);
     //   if (pick === 0) {
     //       gameOver()
     //   }
-    console.log(pick);
+    // console.log(pick);
     //iterates through answers and shows one on screen
     $("#questions").html("<h2>" + pick.question + "</h2>");
 
@@ -208,7 +210,7 @@ $(document).ready(function () {
         $("#answers").html("<h2>Correct! Nice job.</h2>");
         winImg();
         // gameOver();
-        console.log(questions);
+        // console.log(questions);
       } else {
         stop();
         wrongAnswers++;
@@ -220,34 +222,14 @@ $(document).ready(function () {
         );
         loserImg();
       }
+      gameOver()
     });
   }
 
-  //   function showQuestion() {
-  //     // userPick array position
-  //     userGuess = parseInt($(this).attr("data-guessvalue"));
-  //     // right or wrong answer scenarios
-  //     if (userGuess === pick.answer) {
-  //       stop();
-  //       correctAnswers++;
-  //       userGuess = "";
-  //       $("#answers").html("<h2>Correct! Nice job.</h2>");
-  //       winImg();
-  //       // gameOver();
-  //       console.log(questions);
-  //     } else {
-  //       stop();
-  //       wrongAnswers++;
-  //       userGuess = "";
-  //       $("#answers").html(
-  //         "<h2>Incorrect. The correct answer is " +
-  //           pick.choice[pick.answer] +
-  //           "</h2>"
-  //       );
-  //       loserImg();
-  //     }
-  //   }
+
   function showResult() {
+    $(".answerchoices").hide();
+
     $("#questions").show();
     $("#answers").append("<h3>Answered Correctly: " + correctAnswers + "</h3>");
     $("#answers").append("<h3>Answered Incorrectly: " + wrongAnswers + "</h3>");
@@ -342,17 +324,5 @@ $(document).ready(function () {
     }, 5000);
   }
 
-  // reset the game
-  $("#reset").on("click", function () {
-    $("#reset").hide();
-    $("#time").show();
-    $("#answers").empty();
-    $("#questions").empty();
-    for (let i = 0; i < questionSpot.length; i++) {
-      questions.push(questionSpot[i]);
-    }
-    playAudio();
-    runTimer();
-    displayQuestion();
-  });
+ 
 });
