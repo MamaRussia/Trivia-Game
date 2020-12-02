@@ -177,11 +177,13 @@ function showAnswers() {
 function winImg() {
   const index = Math.floor(questions.length - 1);
   const imageSelected = questions[index];
-  const newArray = [];
+  const winArrayPics = [];
   const imageSpot = document.getElementById('answers');
 
-  imageSpot.append(`<img src=${imageSelected.photo}>`);
-  newArray.push(imageSelected);
+  imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
+
+    winArrayPics.push(imageSelected);
+    console.log(winArrayPics);
   //   $('#time').hide();
   //   byePic = setTimeout(function () {
   //     $('#answers').empty();
@@ -196,11 +198,11 @@ function winImg() {
 function loseImg() {
   const index = Math.floor(questions.length - 1);
   const imageSelected = incorrectPhotos[index];
-  const newArray = [];
+  const loseArrayPics = [];
   const imageSpot = document.getElementById('answers');
 
-  imageSpot.append(`<img src=${imageSelected.photo}>`);
-  newArray.push(imageSelected);
+  imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
+  loseArrayPics.push(imageSelected);
   //   $('#time').hide();
   //   byePic = setTimeout(function () {
   //     $('#answers').empty();
