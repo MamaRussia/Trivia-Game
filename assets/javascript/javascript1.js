@@ -258,6 +258,20 @@ $(document).ready(function () {
       winImg();
     }
   }
+    // timer function
+    function runTimer() {
+      if (!running) {
+        intervalId = setInterval(decrement, 1000);
+        running = true;
+      }
+    }
+  
+    // stop function
+    function stop() {
+      running = false;
+      clearInterval(intervalId);
+    }
+  
 
   function gameOver() {
     // if over 6 correct this shows
@@ -280,19 +294,6 @@ $(document).ready(function () {
     }
   }
 
-  // timer function
-  function runTimer() {
-    if (!running) {
-      intervalId = setInterval(decrement, 1000);
-      running = true;
-    }
-  }
-
-  // stop function
-  function stop() {
-    running = false;
-    clearInterval(intervalId);
-  }
 
   // adds image to the answer when correct
   function winImg() {

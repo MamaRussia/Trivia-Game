@@ -1,9 +1,6 @@
-const startBtn = document.getElementById('start');
-
-function playAudio() {
-  const x = document.getElementById('myAudio');
-  x.play();
-}
+const correctAnswers = 0;
+const wrongAnswers = 0;
+let notAnswered = 0;
 
 const winnerPhoto = {
   photo: 'assets/images/winner.gif',
@@ -132,9 +129,109 @@ const questions = [
   },
 ];
 
+function playAudio() {
+  const x = document.getElementById('myAudio');
+  x.play();
+}
+
 function showQs() {
-    const index = Math.floor(questions.length - 1);
-    const questionSelected = questions[index];
-    questions.splice(index, 1)
-    console.log(questionSelected);
+  const index = Math.floor(questions.length - 1);
+  const questionSelected = questions[index];
+  const questionSpot = document.getElementById('questions');
+  questions.splice(index, 1);
+  questionSpot.innerHTML = `<h2>${questionSelected.question}</h2>`;
+  console.log(questionSelected);
+  console.log(questionSpot);
+
+  //   for (let i = 0; i < questionSelected.choice.length; i++) {
+  //     const userPick = `<div>`;
+  //     userPick.addClass('answerchoices');
+  //     userPick.html(questionSelected.choice[i]);
+  //     // assign array position so answer can be checked
+  //     console.log(questionSelected.answer);
+  //     userPick.attr('data-guessvalue', i);
+  //     $('#answers').append(userPick);
+  //   }
+
+  playAudio();
+}
+
+function showAnswers() {
+  const index = Math.floor(questions.length - 1);
+  const answerFromQuestionSelected = questions[index];
+  const answerSpot = document.getElementById('answers');
+  questions.splice(index, 1);
+  answerSpot.innerHTML = `<h2>${answerFromQuestionSelected.answer}</h2>`;
+  console.log(answerFromQuestionSelected);
+  console.log(answerSpot);
+
+  //   if (questionSelected === -1) {
+  //     stop();
+  //   } else {
+  //     showQs();
+  //   }
+
+  playAudio();
+}
+
+function winImg() {
+  const index = Math.floor(questions.length - 1);
+  const imageSelected = questions[index];
+  const newArray = [];
+  const imageSpot = document.getElementById('answers');
+
+  imageSpot.append(`<img src=${imageSelected.photo}>`);
+  newArray.push(imageSelected);
+  //   $('#time').hide();
+  //   byePic = setTimeout(function () {
+  //     $('#answers').empty();
+  //     $('#time').show();
+  //     timer = 10;
+  //     runTimer();
+  //     displayQuestion();
+  //   }, 5000);
+  //
+}
+
+function loseImg() {
+  const index = Math.floor(questions.length - 1);
+  const imageSelected = incorrectPhotos[index];
+  const newArray = [];
+  const imageSpot = document.getElementById('answers');
+
+  imageSpot.append(`<img src=${imageSelected.photo}>`);
+  newArray.push(imageSelected);
+  //   $('#time').hide();
+  //   byePic = setTimeout(function () {
+  //     $('#answers').empty();
+  //     $('#time').show();
+  //     timer = 10;
+  //     runTimer();
+  //     displayQuestion();
+  //   }, 5000);
+  //
+}
+
+function runTimer() {
+  let running;
+  let intervalId;
+  let timer = 10;
+
+  if (!running) {
+    intervalId = setInterval(runTimer, 1000);
+    running = true;
+    timer--;
+  }
+
+  if (timer === 0) {
+    notAnswered++;
+    stop();
+  }
+}
+
+function stop() {
+  let running;
+  let intervalId;
+  running = false;
+  clearInterval(intervalId);
 }
