@@ -135,25 +135,43 @@ function playAudio() {
 }
 
 function showQs() {
+  // hideStart();
   const index = Math.floor(questions.length - 1);
-  const questionSelected = questions[index];
-  const questionSpot = document.getElementById('questions');
+  const pick = questions[index];
+  let choicesFromQuestion = questions[index].choice;
+  console.log(pick);
+  console.log(choicesFromQuestion);
+
+  const questionSpot = document.querySelector('#questions');
+  const answerSpot = document.querySelector('#answers');
+
   questions.splice(index, 1);
-  questionSpot.innerHTML = `<h2>${questionSelected.question}</h2>`;
-  console.log(questionSelected);
-  console.log(questionSpot);
+  questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
+  answerSpot.innerHTML = `<h2>${choicesFromQuestion}</h2>`;
 
-  //   for (let i = 0; i < questionSelected.choice.length; i++) {
-  //     const userPick = `<div>`;
-  //     userPick.addClass('answerchoices');
-  //     userPick.html(questionSelected.choice[i]);
-  //     // assign array position so answer can be checked
-  //     console.log(questionSelected.answer);
-  //     userPick.attr('data-guessvalue', i);
-  //     $('#answers').append(userPick);
-  //   }
+    for (let i = 0; i < pick.choice.length; i++) {
+        let userPick = document.createElement('div');
+        userPick.classList = 'answerchoices';
+        userPick.innerHTML = pick.choice[i];
+        userPick.setAttribute('data-guessvalue', i);
+        
+        console.log(userPick);
+        
+    choicesFromQuestion = document.querySelector('#answers');
+    choicesFromQuestion.innerHTML = `${pick.choice}`;
+  }
+  choicesFromQuestion = document.createElement('div');
+  choicesFromQuestion.classList = 'answerchoices';
+}
 
-  playAudio();
+let startBtn = document.querySelector('button');
+console.log(startBtn);
+startBtn.addEventListener('click', showQs);
+
+function hideStart() {
+  startBtn = document.querySelector('button');
+
+  startBtn.style.display = 'none';
 }
 
 function showAnswers() {
@@ -165,15 +183,8 @@ function showAnswers() {
   console.log(answerFromQuestionSelected);
   console.log(answerSpot);
 
-  //   if (questionSelected === -1) {
-  //     stop();
-  //   } else {
-  //     showQs();
-  //   }
-
   playAudio();
 }
-
 function winImg() {
   const index = Math.floor(questions.length - 1);
   const imageSelected = questions[index];
@@ -182,19 +193,9 @@ function winImg() {
 
   imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
 
-    winArrayPics.push(imageSelected);
-    console.log(winArrayPics);
-  //   $('#time').hide();
-  //   byePic = setTimeout(function () {
-  //     $('#answers').empty();
-  //     $('#time').show();
-  //     timer = 10;
-  //     runTimer();
-  //     displayQuestion();
-  //   }, 5000);
-  //
+  winArrayPics.push(imageSelected);
+  console.log(winArrayPics);
 }
-
 function loseImg() {
   const index = Math.floor(questions.length - 1);
   const imageSelected = incorrectPhotos[index];
@@ -203,17 +204,7 @@ function loseImg() {
 
   imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
   loseArrayPics.push(imageSelected);
-  //   $('#time').hide();
-  //   byePic = setTimeout(function () {
-  //     $('#answers').empty();
-  //     $('#time').show();
-  //     timer = 10;
-  //     runTimer();
-  //     displayQuestion();
-  //   }, 5000);
-  //
 }
-
 function runTimer() {
   let running;
   let intervalId;
