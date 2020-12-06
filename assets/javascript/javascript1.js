@@ -201,6 +201,7 @@ $(document).ready(function () {
     // function for when answer clicked
     $(".answerchoices").on("click", function () {
       // userPick array position
+      console.log(userGuess);
       userGuess = parseInt($(this).attr("data-guessvalue"));
       // right or wrong answer scenarios
       if (userGuess === pick.answer) {

@@ -138,12 +138,8 @@ function playAudio() {
 function showQs() {
   const index = Math.floor(questions.length - 1);
   const pick = questions[index];
-  let choicesFromQuestion = questions[index].choice;
-  console.log(pick);
-  console.log(choicesFromQuestion);
-
-    const questionSpot = document.querySelector('#questions');
-    const choiceSpot = document.querySelector('#answers');
+  const questionSpot = document.querySelector('#questions');
+  const choiceSpot = document.querySelector('#answers');
   questions.splice(index, 1);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
 
@@ -151,20 +147,27 @@ function showQs() {
     const userPick = document.createElement('div');
     userPick.classList = 'answerchoices';
     userPick.innerHTML = pick.choice[i];
-      userPick.setAttribute('data-guessvalue', i);
-      choiceSpot.appendChild(userPick);
-    console.log(userPick);
-  }
-  choicesFromQuestion = document.createElement('div');
-  choicesFromQuestion.classList = 'answerchoices';
+    userPick.setAttribute('data-guessvalue', i);
+    choiceSpot.appendChild(userPick);
+      console.log(userPick);
+      hideStart();
+    }
 }
+
+function pickAnswer() {
+    let answerChoices = document.querySelectorAll('.answerchoices');  
+    answerChoices = setAttribute('data-guessvalue')
+  
+    console.log(answerChoices);
+}
+
+// answerChoices.addEventListener('click', pickAnswer);
 
 console.log(startBtn);
 startBtn.addEventListener('click', showQs);
 
 function hideStart() {
-  startBtn = document.querySelector('button');
-
+  let startBtn = document.querySelector('button');
   startBtn.style.display = 'none';
 }
 
