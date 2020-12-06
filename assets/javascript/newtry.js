@@ -1,6 +1,7 @@
 const correctAnswers = 0;
 const wrongAnswers = 0;
-let notAnswered = 0;
+const startBtn = document.querySelector('button');
+const notAnswered = 0;
 
 const winnerPhoto = {
   photo: 'assets/images/winner.gif',
@@ -135,36 +136,29 @@ function playAudio() {
 }
 
 function showQs() {
-  // hideStart();
   const index = Math.floor(questions.length - 1);
   const pick = questions[index];
   let choicesFromQuestion = questions[index].choice;
   console.log(pick);
   console.log(choicesFromQuestion);
 
-  const questionSpot = document.querySelector('#questions');
-  const answerSpot = document.querySelector('#answers');
-
+    const questionSpot = document.querySelector('#questions');
+    const choiceSpot = document.querySelector('#answers');
   questions.splice(index, 1);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
-  answerSpot.innerHTML = `<h2>${choicesFromQuestion}</h2>`;
 
-    for (let i = 0; i < pick.choice.length; i++) {
-        let userPick = document.createElement('div');
-        userPick.classList = 'answerchoices';
-        userPick.innerHTML = pick.choice[i];
-        userPick.setAttribute('data-guessvalue', i);
-        
-        console.log(userPick);
-        
-    choicesFromQuestion = document.querySelector('#answers');
-    choicesFromQuestion.innerHTML = `${pick.choice}`;
+  for (let i = 0; i < pick.choice.length; i++) {
+    const userPick = document.createElement('div');
+    userPick.classList = 'answerchoices';
+    userPick.innerHTML = pick.choice[i];
+      userPick.setAttribute('data-guessvalue', i);
+      choiceSpot.appendChild(userPick);
+    console.log(userPick);
   }
   choicesFromQuestion = document.createElement('div');
   choicesFromQuestion.classList = 'answerchoices';
 }
 
-let startBtn = document.querySelector('button');
 console.log(startBtn);
 startBtn.addEventListener('click', showQs);
 
@@ -174,17 +168,6 @@ function hideStart() {
   startBtn.style.display = 'none';
 }
 
-function showAnswers() {
-  const index = Math.floor(questions.length - 1);
-  const answerFromQuestionSelected = questions[index];
-  const answerSpot = document.getElementById('answers');
-  questions.splice(index, 1);
-  answerSpot.innerHTML = `<h2>${answerFromQuestionSelected.answer}</h2>`;
-  console.log(answerFromQuestionSelected);
-  console.log(answerSpot);
-
-  playAudio();
-}
 function winImg() {
   const index = Math.floor(questions.length - 1);
   const imageSelected = questions[index];
@@ -204,27 +187,4 @@ function loseImg() {
 
   imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
   loseArrayPics.push(imageSelected);
-}
-function runTimer() {
-  let running;
-  let intervalId;
-  let timer = 10;
-
-  if (!running) {
-    intervalId = setInterval(runTimer, 1000);
-    running = true;
-    timer--;
-  }
-
-  if (timer === 0) {
-    notAnswered++;
-    stop();
-  }
-}
-
-function stop() {
-  let running;
-  let intervalId;
-  running = false;
-  clearInterval(intervalId);
 }
