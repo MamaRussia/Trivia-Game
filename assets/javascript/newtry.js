@@ -1,7 +1,8 @@
-const correctAnswers = 0;
+let correctAnswers = 0;
 const wrongAnswers = 0;
 const startBtn = document.querySelector('button');
-const notAnswered = 0;
+let notAnswered = 0;
+startBtn.addEventListener('click', showQs);
 
 const winnerPhoto = {
   photo: 'assets/images/winner.gif',
@@ -140,6 +141,8 @@ function showQs() {
   const pick = questions[index];
   const questionSpot = document.querySelector('#questions');
   const choiceSpot = document.querySelector('#answers');
+  //   let userGuess;
+
   questions.splice(index, 1);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
 
@@ -149,25 +152,32 @@ function showQs() {
     userPick.innerHTML = pick.choice[i];
     userPick.setAttribute('data-guessvalue', i);
     choiceSpot.appendChild(userPick);
-      console.log(userPick);
-      hideStart();
-    }
+    const answerChoices = document.querySelectorAll('.answerchoices');
+    console.log(answerChoices);
+    hideStart();
+    playAudio();
+  }
+  console.log(pick);
 }
 
 function pickAnswer() {
-    let answerChoices = document.querySelectorAll('.answerchoices');  
-    answerChoices = setAttribute('data-guessvalue')
-  
-    console.log(answerChoices);
+  const answerChoices = document.querySelectorAll('.answerchoices');
+  let userGuess;
+  userGuess = parseInt(userPick);
+
+  if (userGuess === pick.answer) {
+    correctAnswers++;
+    userGuess = '';
+  }
+  console.log(answerChoices);
 }
 
 // answerChoices.addEventListener('click', pickAnswer);
 
 console.log(startBtn);
-startBtn.addEventListener('click', showQs);
 
 function hideStart() {
-  let startBtn = document.querySelector('button');
+  const startBtn = document.querySelector('button');
   startBtn.style.display = 'none';
 }
 
@@ -190,4 +200,44 @@ function loseImg() {
 
   imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
   loseArrayPics.push(imageSelected);
+}
+
+function decrement() {
+  const time = document.querySelector('#time');
+  const pick = questions;
+  let timer = 10;
+  time.innerHTML = `<p><b>Time to Answer: ${timer} seconds</b></p>`;
+  timer--;
+
+  // if timer reaches zero
+  if (timer === 0) {
+    notAnswered++;
+    const choiceSpot = document.querySelector('#answers');
+    choiceSpot.innerHTML = `<h2>Think faster. The correct answer is ${
+      pick.choice[pick.answer]
+    }</h2>`;
+    winImg();
+  }
+;}
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var countdown = 10,
+        display = document.querySelector('#time');
+    startTimer(countdown, display);
 }
