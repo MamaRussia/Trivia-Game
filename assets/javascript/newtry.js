@@ -155,7 +155,8 @@ function showQs() {
     const answerChoices = document.querySelectorAll('.answerchoices');
     console.log(answerChoices);
     hideStart();
-    playAudio();
+      playAudio();
+      timer();
   }
   console.log(pick);
 }
@@ -218,26 +219,28 @@ function decrement() {
     }</h2>`;
     winImg();
   }
-;}
+}
 function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        // minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+  let timer = duration;
+  let minutes;
+  let seconds;
+  setInterval(function () {
+    // minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
 
-        // minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+    // minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
 
-        display.textContent = `Time to answer:  ${seconds}`;
+    display.textContent = `Time to answer:  ${seconds}`;
 
-        if (--timer < 0) {
-            timer = duration;
-        }
-    }, 1000);
+    if (--timer < 0) {
+      timer = duration;
+    }
+  }, 1000);
 }
 
-window.onload = function () {
-    var countdown = 10,
-        display = document.querySelector('#time');
-    startTimer(countdown, display);
+function timer() {
+  const countdown = 10;
+  const display = document.querySelector('#time');
+  startTimer(countdown, display);
 }
