@@ -222,14 +222,13 @@ function decrement() {
 }
 function startTimer(duration, display) {
   let timer = duration;
-  let minutes;
   let seconds;
   setInterval(function () {
     // minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
 
     // minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? `0${seconds}` : seconds;
+    seconds = seconds < 10 ? `${seconds}` : seconds;
 
     display.textContent = `Time to answer:  ${seconds}`;
 
