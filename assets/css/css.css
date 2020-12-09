@@ -32,6 +32,11 @@ h1 {
 
 }
 
+#time {
+  font-size: 20px;
+    font-weight: bold
+}
+
 .answerchoices:hover {
 background-color: lightgoldenrodyellow;
 

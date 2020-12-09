@@ -5,15 +5,7 @@ $(document).ready(function () {
   function playAudio() {
     x.play();
   }
-  let correctAnswers = 0;
-  let wrongAnswers = 0;
-  let notAnswered = 0;
-  let userGuess = "";
-  let running = false;
-  let newArray = [];
-  let questionSpot = [];
-  let timer = 10;
-  let intervalId;
+  
 
   let winnerPhoto = {
     photo: "assets/images/winner.gif",
@@ -148,7 +140,23 @@ $(document).ready(function () {
     },
   ];
 
+<<<<<<< HEAD
   console.log(questions);
+=======
+  let correctAnswers = 0;
+  let wrongAnswers = 0;
+  let notAnswered = 0;
+  let userGuess = "";
+  let running = false;
+  let newArray = [];
+  let timer = 10;
+  let intervalId;
+
+  // questions.forEach(function (e) {
+  //     console.log(e);
+  // })
+
+>>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
   // hides the reset button
   $("#reset").hide();
   // function for start button
@@ -158,6 +166,7 @@ $(document).ready(function () {
     displayQuestion();
     runTimer();
   });
+<<<<<<< HEAD
   // reset the game
   $("#reset").on("click", function () {
     $("#reset").hide();
@@ -167,19 +176,24 @@ $(document).ready(function () {
     runTimer();
     displayQuestion();
   });
+=======
+
+  // console.log(questions);
+>>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
 
   // display question function
   function displayQuestion() {
     console.log(questions);
 
     // generate random index in array
-    index = Math.floor(Math.random() * questions.length); // console.log(questions.splice());
+    const index = Math.floor(questions.length - 1); // console.log(questions.splice());
     pick = questions[index];
     questions.splice(index, 1);
+    console.log(questions.question);
     //   if (pick === 0) {
     //       gameOver()
     //   }
-    console.log(pick);
+    // console.log(pick);
     //iterates through answers and shows one on screen
     $("#questions").html("<h2>" + pick.question + "</h2>");
 
@@ -199,6 +213,7 @@ $(document).ready(function () {
     // function for when answer clicked
     $(".answerchoices").on("click", function () {
       // userPick array position
+      console.log(userGuess);
       userGuess = parseInt($(this).attr("data-guessvalue"));
       // right or wrong answer scenarios
       if (userGuess === pick.answer) {
@@ -206,8 +221,14 @@ $(document).ready(function () {
         correctAnswers++;
         userGuess = "";
         $("#answers").html("<h2>Correct! Nice job.</h2>");
+<<<<<<< HEAD
           winImg();
           
+=======
+        winImg();
+        // gameOver();
+        // console.log(questions);
+>>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
       } else {
         stop();
         wrongAnswers++;
@@ -219,12 +240,20 @@ $(document).ready(function () {
         );
         loserImg();
       }
+      gameOver()
     });
     gameOver();
   }
 
+<<<<<<< HEAD
   function showResult() {
     $(".answerchoices").hide();
+=======
+
+  function showResult() {
+    $(".answerchoices").hide();
+
+>>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
     $("#questions").show();
     $("#answers").append("<h3>Answered Correctly: " + correctAnswers + "</h3>");
     $("#answers").append("<h3>Answered Incorrectly: " + wrongAnswers + "</h3>");
@@ -253,6 +282,20 @@ $(document).ready(function () {
       winImg();
     }
   }
+    // timer function
+    function runTimer() {
+      if (!running) {
+        intervalId = setInterval(decrement, 1000);
+        running = true;
+      }
+    }
+  
+    // stop function
+    function stop() {
+      running = false;
+      clearInterval(intervalId);
+    }
+  
 
   function gameOver() {
     // if over 6 correct this shows
@@ -275,19 +318,6 @@ $(document).ready(function () {
     }
   }
 
-  // timer function
-  function runTimer() {
-    if (!running) {
-      intervalId = setInterval(decrement, 1000);
-      running = true;
-    }
-  }
-
-  // stop function
-  function stop() {
-    running = false;
-    clearInterval(intervalId);
-  }
 
   // adds image to the answer when correct
   function winImg() {
@@ -318,4 +348,9 @@ $(document).ready(function () {
       displayQuestion();
     }, 5000);
   }
+<<<<<<< HEAD
+=======
+
+ 
+>>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
 });
