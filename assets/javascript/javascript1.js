@@ -148,10 +148,7 @@ $(document).ready(function () {
     },
   ];
 
-  // questions.forEach(function (e) {
-  //     console.log(e);
-  // })
-
+  console.log(questions);
   // hides the reset button
   $("#reset").hide();
   // function for start button
@@ -160,13 +157,16 @@ $(document).ready(function () {
     playAudio();
     displayQuestion();
     runTimer();
-    // pushes random question to questionSpot
-    // for (let i = 0; i < questions.length; i++) {
-    //   questionSpot.push(questions[i]);
-    // }
   });
-
-  console.log(questions);
+  // reset the game
+  $("#reset").on("click", function () {
+    $("#reset").hide();
+    $("#time").show();
+    $("#answers").empty();
+    $("#questions").empty();
+    runTimer();
+    displayQuestion();
+  });
 
   // display question function
   function displayQuestion() {
@@ -206,9 +206,8 @@ $(document).ready(function () {
         correctAnswers++;
         userGuess = "";
         $("#answers").html("<h2>Correct! Nice job.</h2>");
-        winImg();
-        // gameOver();
-        console.log(questions);
+          winImg();
+          
       } else {
         stop();
         wrongAnswers++;
@@ -221,33 +220,11 @@ $(document).ready(function () {
         loserImg();
       }
     });
+    gameOver();
   }
 
-  //   function showQuestion() {
-  //     // userPick array position
-  //     userGuess = parseInt($(this).attr("data-guessvalue"));
-  //     // right or wrong answer scenarios
-  //     if (userGuess === pick.answer) {
-  //       stop();
-  //       correctAnswers++;
-  //       userGuess = "";
-  //       $("#answers").html("<h2>Correct! Nice job.</h2>");
-  //       winImg();
-  //       // gameOver();
-  //       console.log(questions);
-  //     } else {
-  //       stop();
-  //       wrongAnswers++;
-  //       userGuess = "";
-  //       $("#answers").html(
-  //         "<h2>Incorrect. The correct answer is " +
-  //           pick.choice[pick.answer] +
-  //           "</h2>"
-  //       );
-  //       loserImg();
-  //     }
-  //   }
   function showResult() {
+    $(".answerchoices").hide();
     $("#questions").show();
     $("#answers").append("<h3>Answered Correctly: " + correctAnswers + "</h3>");
     $("#answers").append("<h3>Answered Incorrectly: " + wrongAnswers + "</h3>");
@@ -279,7 +256,7 @@ $(document).ready(function () {
 
   function gameOver() {
     // if over 6 correct this shows
-
+    stop();
     if (correctAnswers > 6) {
       $("#questions").html("<h2>You are the Trivia Master. </h2>");
       $("#answers").append("<img src=" + winnerPhoto.photo + ">");
@@ -341,18 +318,4 @@ $(document).ready(function () {
       displayQuestion();
     }, 5000);
   }
-
-  // reset the game
-  $("#reset").on("click", function () {
-    $("#reset").hide();
-    $("#time").show();
-    $("#answers").empty();
-    $("#questions").empty();
-    for (let i = 0; i < questionSpot.length; i++) {
-      questions.push(questionSpot[i]);
-    }
-    playAudio();
-    runTimer();
-    displayQuestion();
-  });
 });
