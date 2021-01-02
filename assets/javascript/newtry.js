@@ -161,16 +161,23 @@ function showQs() {
   console.log(pick);
 }
 
+
+
 function pickAnswer() {
   const answerChoices = document.querySelectorAll('.answerchoices');
-  let userGuess;
-  userGuess = parseInt(userPick);
 
-  if (userGuess === pick.answer) {
-    correctAnswers++;
-    userGuess = '';
+  for (let i = 0; i < answerChoices.length; i++) {
+    console.log(answerChoices[i]);
+    
   }
-  console.log(answerChoices);
+
+  // userGuess = parseInt(userPick);
+
+  // if (userGuess === pick.answer) {
+  //   correctAnswers++;
+  //   userGuess = '';
+  // }
+  // console.log(answerChoices);
 }
 
 // answerChoices.addEventListener('click', pickAnswer);

@@ -140,23 +140,7 @@ $(document).ready(function () {
     },
   ];
 
-<<<<<<< HEAD
   console.log(questions);
-=======
-  let correctAnswers = 0;
-  let wrongAnswers = 0;
-  let notAnswered = 0;
-  let userGuess = "";
-  let running = false;
-  let newArray = [];
-  let timer = 10;
-  let intervalId;
-
-  // questions.forEach(function (e) {
-  //     console.log(e);
-  // })
-
->>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
   // hides the reset button
   $("#reset").hide();
   // function for start button
@@ -166,7 +150,6 @@ $(document).ready(function () {
     displayQuestion();
     runTimer();
   });
-<<<<<<< HEAD
   // reset the game
   $("#reset").on("click", function () {
     $("#reset").hide();
@@ -176,10 +159,6 @@ $(document).ready(function () {
     runTimer();
     displayQuestion();
   });
-=======
-
-  // console.log(questions);
->>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
 
   // display question function
   function displayQuestion() {
@@ -221,14 +200,8 @@ $(document).ready(function () {
         correctAnswers++;
         userGuess = "";
         $("#answers").html("<h2>Correct! Nice job.</h2>");
-<<<<<<< HEAD
           winImg();
           
-=======
-        winImg();
-        // gameOver();
-        // console.log(questions);
->>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
       } else {
         stop();
         wrongAnswers++;
@@ -245,15 +218,8 @@ $(document).ready(function () {
     gameOver();
   }
 
-<<<<<<< HEAD
   function showResult() {
     $(".answerchoices").hide();
-=======
-
-  function showResult() {
-    $(".answerchoices").hide();
-
->>>>>>> 45b03be37a29706291a1c4e62ceda86292026015
     $("#questions").show();
     $("#answers").append("<h3>Answered Correctly: " + correctAnswers + "</h3>");
     $("#answers").append("<h3>Answered Incorrectly: " + wrongAnswers + "</h3>");
