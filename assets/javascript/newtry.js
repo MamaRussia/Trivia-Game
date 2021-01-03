@@ -1,6 +1,8 @@
 let correctAnswers = 0;
 const wrongAnswers = 0;
 const startBtn = document.querySelector('button');
+let answerChoices = document.querySelectorAll('.answerchoices');
+let userGuess = '';
 let notAnswered = 0;
 startBtn.addEventListener('click', showQs);
 
@@ -141,19 +143,16 @@ function showQs() {
   const pick = questions[index];
   const questionSpot = document.querySelector('#questions');
   const choiceSpot = document.querySelector('#answers');
-  //   let userGuess;
-
   questions.splice(index, 1);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
 
   for (let i = 0; i < pick.choice.length; i++) {
-    const userPick = document.createElement('div');
-    userPick.classList = 'answerchoices';
-    userPick.innerHTML = pick.choice[i];
-    userPick.setAttribute('data-guessvalue', i);
-    choiceSpot.appendChild(userPick);
-    const answerChoices = document.querySelectorAll('.answerchoices');
-    console.log(answerChoices);
+    const choices = document.createElement('div');
+    choices.classList = 'answerchoices';
+    console.log(choices);
+    choices.innerHTML = pick.choice[i];
+    choices.setAttribute('data-guessvalue', i);
+    choiceSpot.appendChild(choices);
     hideStart();
       playAudio();
       timer();
@@ -161,15 +160,30 @@ function showQs() {
   console.log(pick);
 }
 
+function handleGuessClick(e) {
+  answerChoices.forEach(answr => {
+    console.log(answr);
+    // console.log(e.currentTarget);
+  })
+
+  
+}
 
 
-function pickAnswer() {
+
+function pickAnswer(e) {
   const answerChoices = document.querySelectorAll('.answerchoices');
 
-  for (let i = 0; i < answerChoices.length; i++) {
-    console.log(answerChoices[i]);
+  answerChoices.forEach(answr => {
+    console.log(answr);
+    console.log(e.currentTarget);
+  })
+
+  // for (let i = 0; i < answerChoices.length; i++) {
+  //   console.log(answerChoices[i]);
+  //   console.log(e.currentTarget);
     
-  }
+  // }
 
   // userGuess = parseInt(userPick);
 
@@ -182,7 +196,7 @@ function pickAnswer() {
 
 // answerChoices.addEventListener('click', pickAnswer);
 
-console.log(startBtn);
+// console.log(startBtn);
 
 function hideStart() {
   const startBtn = document.querySelector('button');
