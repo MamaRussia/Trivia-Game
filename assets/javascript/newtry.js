@@ -1,10 +1,14 @@
 let correctAnswers = 0;
+let notAnswered = 0;
 const wrongAnswers = 0;
 const startBtn = document.querySelector('button');
+const questionSpot = document.querySelector('#questions');
+const answerSpot = document.querySelector('#answers');
+const choiceSpot = document.querySelector('#choices');
+const time = document.querySelector('#time');
 let answerChoices = document.querySelectorAll('.answerchoices');
 let userGuess = '';
 
-let notAnswered = 0;
 startBtn.addEventListener('click', showQs);
 
 const winnerPhoto = {
@@ -134,6 +138,7 @@ const questions = [
   },
 ];
 
+
 function playAudio() {
   const x = document.getElementById('myAudio');
   x.play();
@@ -142,87 +147,56 @@ function playAudio() {
 function showQs() {
   const index = Math.floor(questions.length - 1);
   const pick = questions[index];
-  const questionSpot = document.querySelector('#questions');
-  const choiceSpot = document.querySelector('#answers');
   questions.splice(index, 1);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
 
   for (let i = 0; i < pick.choice.length; i++) {
-    const choices = document.createElement('div');
-    choices.classList = 'answerchoices';
-    console.log(choices);
-    choices.innerHTML = pick.choice[i];
-    choices.setAttribute('data-guessvalue', i);
-    choiceSpot.appendChild(choices);
-    choices.addEventListener('mousedown', e => {
+    let choiceDiv = document.createElement('div');
+    choiceDiv.classList = 'answerchoices';
+    choiceDiv.innerHTML = pick.choice[i];
+    console.log(choiceDiv);
+    choiceDiv.setAttribute('data-guessvalue', i);
+    answerSpot.appendChild(choiceDiv);
+    choiceDiv.addEventListener('mousedown', e => {
       userGuess = e.currentTarget.getAttribute('data-guessvalue');
       console.log(typeof userGuess);
       if (userGuess === pick.answer.toString()) {
         console.log('Finally joffrey');
-        choiceSpot.innerHTML = `<h2>Correct! Nice Job</h2>` 
-        winImg()
-      }
+        answerSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
+        console.log(pick.photo);
+        choiceSpot.innerHTML = `<img src=${pick.photo} />`  ;
+        // winImg()
+      } else {
+        answerSpot.innerHTML = ` <h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
+        loseImg()
+        }
+        // {
+
+      //   answerSpot.innerHTML = ` <h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`
+      // }
+      
           
     })
     hideStart();
-      playAudio();
+      // playAudio();
       timer();
   }
-  console.log(pick);
-}
-
-function handleGuessClick() {
-  choices.addEventListener('mousedown', e => {
-    userGuess = e.currentTarget.getAttribute('data-guessvalue');
-    console.log(typeof userGuess);
-    if (userGuess === pick.answer.toString()) {
-      console.log('Finally joffrey');
-    }
-   
-    
-
-  })
-  
+  // console.log(pick.photo);
 }
 
 
 
-function pickAnswer() {
-
-  answerChoices.forEach(answr => {
-    console.log(answr);
-   
-  })
-
-  // for (let i = 0; i < answerChoices.length; i++) {
-  //   console.log(answerChoices[i]);
-  //   console.log(e.currentTarget);
-    
-  // }
-
-  // userGuess = parseInt(userPick);
-
-  // if (userGuess === pick.answer) {
-  //   correctAnswers++;
-  //   userGuess = '';
-  // }
-  // console.log(answerChoices);
-}
-
-// answerChoices.addEventListener('click', pickAnswer);
-
-// console.log(startBtn);
 
 function hideStart() {
-  const startBtn = document.querySelector('button');
   startBtn.style.display = 'none';
 }
 
 function winImg() {
   const index = Math.floor(questions.length - 1);
   const imageSelected = questions[index];
+  console.log(imageSelected);
   const winArrayPics = [];
-  const imageSpot = document.getElementById('answers');
+  // const imageSpot = document.getElementById('answers');
 
   imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
 
@@ -240,7 +214,7 @@ function loseImg() {
 }
 
 function decrement() {
-  const time = document.querySelector('#time');
+  // const time = document.querySelector('#time');
   const pick = questions;
   let timer = 10;
   time.innerHTML = `<p><b>Time to Answer: ${timer} seconds</b></p>`;
@@ -249,8 +223,7 @@ function decrement() {
   // if timer reaches zero
   if (timer === 0) {
     notAnswered++;
-    const choiceSpot = document.querySelector('#answers');
-    choiceSpot.innerHTML = `<h2>Think faster. The correct answer is ${
+    answerSpot.innerHTML = `<h2>Think faster. The correct answer is ${
       pick.choice[pick.answer]
     }</h2>`;
     winImg();
@@ -260,10 +233,8 @@ function startTimer(duration, display) {
   let timer = duration;
   let seconds;
   setInterval(function () {
-    // minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
 
-    // minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? `${seconds}` : seconds;
 
     display.textContent = `Time to answer:  ${seconds}`;
@@ -278,4 +249,12 @@ function timer() {
   const countdown = 10;
   const display = document.querySelector('#time');
   startTimer(countdown, display);
+  if (countdown === 0) {
+    notAnswered++;
+    // const answerSpot = document.querySelector('#answers');
+    answerSpot.innerHTML = `<h2>Think faster. The correct answer is ${
+      pick.choice[pick.answer]
+    }</h2>`;
+    winImg();
+  }
 }
