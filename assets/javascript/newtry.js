@@ -1,7 +1,6 @@
 let correctAnswers = 0;
 const wrongAnswers = 0;
 const startBtn = document.querySelector('button');
-const choiceSpot = document.querySelector('#answers');
 let answerChoices = document.querySelectorAll('.answerchoices');
 let userGuess = '';
 
@@ -143,7 +142,10 @@ function playAudio() {
 function showQs() {
   const index = Math.floor(questions.length - 1);
   const pick = questions[index];
-  // const choiceSpot = document.querySelector('#answers');
+  const questionSpot = document.querySelector('#questions');
+  const choiceSpot = document.querySelector('#answers');
+  questions.splice(index, 1);
+  questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
 
   for (let i = 0; i < pick.choice.length; i++) {
     const choices = document.createElement('div');
@@ -157,24 +159,29 @@ function showQs() {
       console.log(typeof userGuess);
       if (userGuess === pick.answer.toString()) {
         console.log('Finally joffrey');
+        choiceSpot.innerHTML = `<h2>Correct! Nice Job</h2>` 
+        winImg()
       }
-     
-      
-
+          
     })
     hideStart();
       playAudio();
       timer();
   }
-  console.log(typeof pick.answer);
+  console.log(pick);
 }
 
 function handleGuessClick() {
-  answerChoices.forEach(answr => {
-    console.log(answr);
-    // console.log(e.currentTarget);
-  })
+  choices.addEventListener('mousedown', e => {
+    userGuess = e.currentTarget.getAttribute('data-guessvalue');
+    console.log(typeof userGuess);
+    if (userGuess === pick.answer.toString()) {
+      console.log('Finally joffrey');
+    }
+   
+    
 
+  })
   
 }
 
