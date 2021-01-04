@@ -162,18 +162,16 @@ function showQs() {
       console.log(typeof userGuess);
       if (userGuess === pick.answer.toString()) {
         console.log('Finally joffrey');
+        time.style.display = 'none'
         answerSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
         console.log(pick.photo);
         choiceSpot.innerHTML = `<img src=${pick.photo} />`  ;
         // winImg()
       } else {
-        answerSpot.innerHTML = ` <h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
+        time.style.display = 'none'
+        questionSpot.innerHTML = ` <h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
         loseImg()
         }
-        // {
-
-      //   answerSpot.innerHTML = ` <h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`
-      // }
       
           
     })
@@ -184,6 +182,11 @@ function showQs() {
   // console.log(pick.photo);
 }
 
+function checkGuess() {
+  
+  
+}
+
 
 
 
@@ -191,18 +194,7 @@ function hideStart() {
   startBtn.style.display = 'none';
 }
 
-function winImg() {
-  const index = Math.floor(questions.length - 1);
-  const imageSelected = questions[index];
-  console.log(imageSelected);
-  const winArrayPics = [];
-  // const imageSpot = document.getElementById('answers');
 
-  imageSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
-
-  winArrayPics.push(imageSelected);
-  console.log(winArrayPics);
-}
 function loseImg() {
   const index = Math.floor(questions.length - 1);
   const imageSelected = incorrectPhotos[index];
@@ -215,7 +207,7 @@ function loseImg() {
 
 function decrement() {
   // const time = document.querySelector('#time');
-  const pick = questions;
+  // const pick = questions;
   let timer = 10;
   time.innerHTML = `<p><b>Time to Answer: ${timer} seconds</b></p>`;
   timer--;
@@ -246,9 +238,9 @@ function startTimer(duration, display) {
 }
 
 function timer() {
-  const countdown = 10;
-  const display = document.querySelector('#time');
-  startTimer(countdown, display);
+  let countdown = 10;
+  // const display = document.querySelector('#time');
+  startTimer(countdown, time);
   if (countdown === 0) {
     notAnswered++;
     // const answerSpot = document.querySelector('#answers');
