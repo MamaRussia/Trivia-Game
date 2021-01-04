@@ -1,15 +1,17 @@
 let correctAnswers = 0;
 let notAnswered = 0;
+let userGuess = '';
 const wrongAnswers = 0;
 const startBtn = document.querySelector('button');
 const questionSpot = document.querySelector('#questions');
 const answerSpot = document.querySelector('#answers');
 const choiceSpot = document.querySelector('#choices');
 const time = document.querySelector('#time');
-let answerChoices = document.querySelectorAll('.answerchoices');
-let userGuess = '';
+let choiceDiv = document.createElement('div');
 
-startBtn.addEventListener('click', showQs);
+const answerChoices = document.querySelectorAll('.answerchoices');
+
+// startBtn.addEventListener('click', showQs);
 
 const winnerPhoto = {
   photo: 'assets/images/winner.gif',
@@ -52,6 +54,7 @@ const incorrectPhotos = [
     photo: 'assets/images/incorrect10.gif',
   },
 ];
+
 const questions = [
   {
     question: 'By law, what is banned in Japanese restaurants?',
@@ -138,7 +141,6 @@ const questions = [
   },
 ];
 
-
 function playAudio() {
   const x = document.getElementById('myAudio');
   x.play();
@@ -151,7 +153,7 @@ function showQs() {
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
 
   for (let i = 0; i < pick.choice.length; i++) {
-    let choiceDiv = document.createElement('div');
+    choiceDiv = document.createElement('div');
     choiceDiv.classList = 'answerchoices';
     choiceDiv.innerHTML = pick.choice[i];
     console.log(choiceDiv);
@@ -160,16 +162,20 @@ function showQs() {
     choiceDiv.addEventListener('mousedown', e => {
       userGuess = e.currentTarget.getAttribute('data-guessvalue');
       console.log(typeof userGuess);
+
+      
       if (userGuess === pick.answer.toString()) {
         console.log('Finally joffrey');
         time.style.display = 'none'
+        questionSpot.style.display = 'none'
         answerSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
         console.log(pick.photo);
         choiceSpot.innerHTML = `<img src=${pick.photo} />`  ;
-        // winImg()
+        setTimeout(function() {showQs()}, 3000)
       } else {
         time.style.display = 'none'
-        questionSpot.innerHTML = ` <h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
+        questionSpot.style.display = 'none'
+        questionSpot.innerHTML = `<h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
         loseImg()
         }
       
@@ -183,6 +189,30 @@ function showQs() {
 }
 
 function checkGuess() {
+  const index = Math.floor(questions.length - 1);
+  const pick = questions[index];
+  choiceDiv.addEventListener('mousedown', e => {
+    userGuess = e.currentTarget.getAttribute('data-guessvalue');
+    console.log(typeof userGuess);
+
+    
+    if (userGuess === pick.answer.toString()) {
+      console.log('Finally joffrey');
+      time.style.display = 'none'
+      questionSpot.style.display = 'none'
+      answerSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
+      console.log(pick.photo);
+      choiceSpot.innerHTML = `<img src=${pick.photo} />`  ;
+      // setTimeout(showQs(), 3000)
+    } else {
+      time.style.display = 'none'
+      questionSpot.style.display = 'none'
+      questionSpot.innerHTML = `<h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
+      loseImg()
+      }
+    
+        
+  })
   
   
 }
@@ -250,3 +280,5 @@ function timer() {
     winImg();
   }
 }
+
+startBtn.addEventListener('click', showQs);
