@@ -4,22 +4,15 @@ let userGuess = '';
 const wrongAnswers = 0;
 let index;
 let pick;
-// let choiceDiv;
 const startBtn = document.querySelector('button');
 const questionSpot = document.querySelector('#questions');
-const answerSpot = document.querySelector('#answers');
-const imgSpot = document.querySelector('#img');
 const choiceSpot = document.querySelector('#choices');
+const imgSpot = document.querySelector('#img');
+var choiceDiv = document.createElement('div');
 const time = document.querySelector('#time');
-let choiceDiv = document.createElement('div');
 
 
-let answerChoices = document.getElementsByClassName('.answerchoices');
-
-
-
-// startBtn.addEventListener('click', showQs);
-
+startBtn.addEventListener('click', showQs);
 const winnerPhoto = {
   photo: 'assets/images/winner.gif',
 };
@@ -148,8 +141,6 @@ const questions = [
   },
 ];
 
-
-
 function playAudio() {
   const x = document.getElementById('myAudio');
   x.play();
@@ -159,22 +150,18 @@ function showQs() {
   index = Math.floor(questions.length - 1);
   pick = questions[index];
   questions.splice(index, 1);
-console.log(pick);
+  console.log(`${pick.question}`);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
   for (let i = 0; i < pick.choice.length; i++) {
-    
-
-
-    
+        
     choiceDiv = document.createElement('div');
-    console.log(typeof choiceDiv);
-    console.log(typeof answerChoices);
+  
     choiceDiv.classList = 'answerchoices';
-    
+    console.log(typeof choiceDiv);
     choiceDiv.innerHTML = pick.choice[i];
     choiceDiv.setAttribute('data-guessvalue', i);
-    console.log(choiceDiv.childNodes);
-    answerSpot.append(choiceDiv);
+    // choiceSpot.innerHTML = `${choiceDiv}`
+    choiceSpot.insertAdjacentElement('beforebegin', choiceDiv);
     // timer()
      hideStart();
       // playAudio();
@@ -191,18 +178,18 @@ function checkGuess(e) {
     console.log(userGuess);
     console.log(pick.answer);
  
-    if (userGuess === pick.answer.toString()) {
+    if (userGuess !== pick.answer.toString()) {
       console.log('Finally sir');
       // time.style.display = 'none'
-      // questionSpot.style.display = 'none'
-      questionSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
-      winImg()
-      setTimeout(showQs, 5000)
-    } else {
-      time.style.display = 'none'
       questionSpot.innerHTML = `<h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
-      // loseImg()
-      setTimeout(loseImg, 3000);
+      loseImg()
+  
+    } else {
+      questionSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
+      choiceSpot.innerHTML = `"<img src=${pick.photo}>"`;
+      setTimeout(showQs, 3000)
+      e.preventDefault()
+      // setTimeout(loseImg, 500);
       // clearTimeout(loser)
       }
     })
@@ -220,69 +207,45 @@ function loseImg() {
   const imageSelected = incorrectPhotos[index];
  incorrectPhotos.splice(index, 1)
   console.log(imageSelected);
-   answerSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
+  choiceSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
+  setTimeout(showQs, 3000)
 }
 
 function winImg() {
  
- const index = Math.floor(questions.length - 1);
+ const index = Math.floor(questions.length );
  const pick = questions[index];
   console.log(pick);
-  questions.splice(index, 1);
+  questions.splice(index, 0);
   console.log(pick.photo);
-  answerSpot.innerHTML = `"<img src=${pick.photo}>"`;
+  choiceSpot.innerHTML = `"<img src=${pick.photo}>"`;
 
 }
 
-function decrement() {
-  let timer = 10;
-  index = Math.floor(questions.length);
-  pick = questions[index];
-  questions.splice(index, 1);
-  time.innerHTML = `<p><b>Time to Answer: ${timer} seconds</b></p>`;
-  timer--;
-
-  if (timer === 0) {
-    notAnswered++;
-    answerSpot.innerHTML = `<h2>Think faster. The correct answer is ${pick.choice[pick.answer]}</h2>`;
-    winImg();
-  }
-}
 
 
 
+// function timer() {
+//   let timer = document.querySelector('#time')
+//   let time = 10
 
-function startTimer(duration, display) {
-  let timer = duration;
-  let seconds;
-  setInterval(function () {
-    seconds = parseInt(timer % 60, 10);
+//   setInterval(function() {
+//     timer.innerHTML = `Time to answer:  ${time}`;
+//     time--;
+//   }, 1000)
+// if (time === 0) {
+//   notAnswered++;
+//   answerSpot.innerHTML = `<h2>Think faster. The correct answer is ${
+//     pick.choice[pick.answer]
+//     }</h2>`;
+//   timer()
+// }
 
-    seconds = seconds < 10 ? `${seconds}` : seconds;
+// }
 
-    display.textContent = `Time to answer:  ${seconds}`;
 
-    if (--timer < 0) {
-      timer = duration;
-    }
-  }, 1000);
-}
 
-function timer() {
-  let countdown = 10;
-  // const display = document.querySelector('#time');
-  startTimer(countdown, time);
-  if (countdown === 0) {
-    notAnswered++;
-    // const answerSpot = document.querySelector('#answers');
-    answerSpot.innerHTML = `<h2>Think faster. The correct answer is ${
-      pick.choice[pick.answer]
-    }</h2>`;
-    winImg();
-  }
-}
-
-startBtn.addEventListener('click', showQs);
+// startBtn.addEventListener('click', showQs);
 
 
 
