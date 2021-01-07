@@ -8,7 +8,7 @@ const startBtn = document.querySelector('button');
 const questionSpot = document.querySelector('#questions');
 const choiceSpot = document.querySelector('#choices');
 const imgSpot = document.querySelector('#img');
-var choiceDiv = document.createElement('div');
+// var choiceDiv = document.createElement('div');
 const time = document.querySelector('#time');
 
 
@@ -152,21 +152,36 @@ function showQs() {
   questions.splice(index, 1);
   console.log(`${pick.question}`);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
-  for (let i = 0; i < pick.choice.length; i++) {
-        
-    choiceDiv = document.createElement('div');
-  
-    choiceDiv.classList = 'answerchoices';
-    console.log(typeof choiceDiv);
-    choiceDiv.innerHTML = pick.choice[i];
-    choiceDiv.setAttribute('data-guessvalue', i);
-    // choiceSpot.innerHTML = `${choiceDiv}`
-    choiceSpot.insertAdjacentElement('beforebegin', choiceDiv);
-    // timer()
-     hideStart();
-      // playAudio();
-      checkGuess()
+
+  console.log(typeof pick.choice);
+  // choiceSpot.innerHTML = `<h3>${pick.choice}</h3>`;
+
+  for (const i of pick.choice) {
+    // console.log(typeof i);
+    console.log(i);
+
+choiceSpot.append(i)
+    
+
   }
+
+
+
+  // for (let i = 0; i < pick.choice.length; i++) {
+        
+  //   choiceDiv = document.createElement('div');
+  
+  //   choiceDiv.classList = 'answerchoices';
+    
+  //   choiceDiv.innerHTML = pick.choice[i];
+  //   choiceDiv.setAttribute('data-guessvalue', i);
+  //   choiceSpot.innerHTML = `${choiceDiv}`
+  //   choiceSpot.append(choiceDiv);
+  //   // timer()
+  //    hideStart();
+  //     // playAudio();
+  //     checkGuess()
+  // }
   // console.log(pick.photo);
 }
 
