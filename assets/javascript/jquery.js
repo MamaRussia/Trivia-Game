@@ -152,10 +152,7 @@ $(document).ready(function () {
         playAudio();
         displayQuestion();
         runTimer();
-        // pushes random question to questionSpot
-        // for (var i = 0; i < questions.length; i++) {
-        //     questionSpot.push(questions[i]);
-        // }
+
     })
     // display question function
     function displayQuestion() {
@@ -164,33 +161,18 @@ $(document).ready(function () {
       pick = questions[index];
       questions.splice(index, 1);
       console.log(`${pick.question}`);
-    
-               
-       
-        //iterates through answers and shows one on screen
-        $("#questions").html(`<h2>${pick.question}</h2>`);
+      $("#questions").html(`<h2>${pick.question}</h2>`);
         
       for (const i of pick.choice) {
         console.log(typeof i);
-        // let choiceDiv = $('<div>');
-        // choiceDiv.addClass('answerchoices')
-        // choiceDiv.attr('data-guessvalue', i)
-        // console.log(choiceDiv);
 
-
-      }
-        // for (var i = 0; i < pick.choice.length; i++) {
-        //     var userPick = $("<div>");
-        //     userPick.addClass("answerchoices");
-        //     userPick.html(pick.choice[i]);
-        //     // assign array position so answer can be checked
-        //     console.log(pick.answer);
-        //     userPick.attr("data-guessvalue", i);
-        //     $("#answers").append(userPick);
-        // }
-      
-      
-     
+        let choiceDiv = $('<div>');
+         choiceDiv.addClass('answerchoices')
+        choiceDiv.attr('data-guessvalue', i)
+        $(choiceDiv).html(i)
+        $('#choices').append(choiceDiv)
+         }
+        
     }
   
      // function for when answer clicked
