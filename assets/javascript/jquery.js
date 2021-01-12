@@ -164,21 +164,31 @@ $(document).ready(function () {
       $("#questions").html(`<h2>${pick.question}</h2>`);
         
       for (const i of pick.choice) {
-        console.log(typeof i);
-
         let choiceDiv = $('<div>');
-         choiceDiv.addClass('answerchoices')
+        choiceDiv.addClass('answerchoices')
         choiceDiv.attr('data-guessvalue', i)
         $(choiceDiv).html(i)
         $('#choices').append(choiceDiv)
          }
-        
     }
   
+
+  $(".answerchoices").on("click", function (e) { 
+    alert( e.currentTarget === this ); // true
+    // console.log(userGuess);
+
+
+   })
+  
      // function for when answer clicked
-     $(".answerchoices").on("click", function () {
+     $(".answerchoices").on("click", function (e) {
       // userPick array position
-      userGuess = parseInt($(this).attr("data-guessvalue"));
+      index = Math.floor(questions.length - 1);
+      pick = questions[index];
+      questions.splice(index, 1);
+       userGuess = e.currentTarget.getAttribute('data-guessvalue');
+           console.log(userGuess);
+
       // right or wrong answer scenarios
       if (userGuess === pick.answer) {
           stop();
@@ -277,6 +287,15 @@ $(document).ready(function () {
                 displayQuestion();
             }
         }, 5000);
+    }
+
+    function loseImg() {
+      const index = Math.floor(Math.random() * incorrectPhotos.length);
+      const imageSelected = incorrectPhotos[index];
+     incorrectPhotos.splice(index, 1)
+      console.log(imageSelected);
+      choiceSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
+      setTimeout(showQs, 3000)
     }
 
     // I need this working correctly!!!!!!!!!!!!!!!!!!!!!!

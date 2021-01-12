@@ -157,20 +157,31 @@ function showQs() {
   // choiceSpot.innerHTML = `<h3>${pick.choice}</h3>`;
 
   for (const i of pick.choice) {
-    // console.log(typeof i);
+    
+    
+    const num = 4;
+    for (let e = 0; e < num.length; e++) {
+      console.log(e);
+      
+    }
+    console.log(typeof i);
     console.log(i);
 
     // choiceSpot.setAttribute('data-guessvalue', i)
     const choiceDiv = document.createElement('div');
     choiceDiv.classList = 'answerchoices';
-           choiceDiv.setAttribute('data-guessvalue', i);
+    choiceDiv.innerHTML = i;
+    // choiceDiv.setAttribute('data-guessvalue', i);
 console.log(choiceDiv);
+console.log(typeof choiceDiv);
 
 // choiceSpot.innerHTML = choiceDiv
-choiceSpot.insertAdjacentHTML('afterend', choiceDiv)
+choiceSpot.appendChild(choiceDiv)
+// choiceSpot.insertAdjacentHTML('afterend', choiceDiv)
     
 
   }
+
 
 
 
