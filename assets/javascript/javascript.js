@@ -146,61 +146,30 @@ function playAudio() {
   x.play();
 }
 
+
+
 function showQs() {
   index = Math.floor(questions.length - 1);
   pick = questions[index];
   questions.splice(index, 1);
   console.log(`${pick.question}`);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
-
-  console.log(typeof pick.choice);
-  // choiceSpot.innerHTML = `<h3>${pick.choice}</h3>`;
-
-  for (const i of pick.choice) {
-    
-    
-    const num = 4;
-    for (let e = 0; e < num.length; e++) {
-      console.log(e);
-      
-    }
-    console.log(typeof i);
-    console.log(i);
-
-    // choiceSpot.setAttribute('data-guessvalue', i)
-    const choiceDiv = document.createElement('div');
+   for (const i of pick.choice) {
+    let answrChoices = document.querySelectorAll('.answerchoices');
+    let choiceDiv = document.createElement('div');
     choiceDiv.classList = 'answerchoices';
     choiceDiv.innerHTML = i;
-    // choiceDiv.setAttribute('data-guessvalue', i);
-console.log(choiceDiv);
-console.log(typeof choiceDiv);
-
-// choiceSpot.innerHTML = choiceDiv
-choiceSpot.appendChild(choiceDiv)
-// choiceSpot.insertAdjacentHTML('afterend', choiceDiv)
+    console.log(choiceDiv);
+    choiceSpot.appendChild(choiceDiv)
+    console.log(answrChoices);
+   }
+  
+  let answrChoices = document.querySelectorAll('.answerchoices');
+  for (let e = 0; e < answrChoices.length ; e++) {
+    answrChoices[e].setAttribute('data-guessvalue', e);
     
-
   }
 
-
-
-
-  // for (let i = 0; i < pick.choice.length; i++) {
-        
-  //   choiceDiv = document.createElement('div');
-  
-  //   choiceDiv.classList = 'answerchoices';
-    
-  //   choiceDiv.innerHTML = pick.choice[i];
-  //   choiceDiv.setAttribute('data-guessvalue', i);
-  //   choiceSpot.innerHTML = `${choiceDiv}`
-  //   choiceSpot.append(choiceDiv);
-  //   // timer()
-  //    hideStart();
-  //     // playAudio();
-  //     checkGuess()
-  // }
-  // console.log(pick.photo);
 }
 
 
