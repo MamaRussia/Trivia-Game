@@ -8,11 +8,10 @@ const startBtn = document.querySelector('button');
 const questionSpot = document.querySelector('#questions');
 const choiceSpot = document.querySelector('#choices');
 const imgSpot = document.querySelector('#img');
-// var choiceDiv = document.createElement('div');
+var choiceDiv = document.createElement('div');
 const time = document.querySelector('#time');
+let answrChoices = document.querySelectorAll('.answerchoices');
 
-
-startBtn.addEventListener('click', showQs);
 const winnerPhoto = {
   photo: 'assets/images/winner.gif',
 };
@@ -155,53 +154,70 @@ function showQs() {
   console.log(`${pick.question}`);
   questionSpot.innerHTML = `<h2>${pick.question}</h2>`;
    for (const i of pick.choice) {
-    let answrChoices = document.querySelectorAll('.answerchoices');
     let choiceDiv = document.createElement('div');
     choiceDiv.classList = 'answerchoices';
     choiceDiv.innerHTML = i;
-    console.log(choiceDiv);
+    console.log(typeof i);
     choiceSpot.appendChild(choiceDiv)
-    console.log(answrChoices);
+    
    }
   
   let answrChoices = document.querySelectorAll('.answerchoices');
   for (let e = 0; e < answrChoices.length ; e++) {
     answrChoices[e].setAttribute('data-guessvalue', e);
-    
   }
 
+
+}
+
+function myFunction(event) { 
+  var x = event.target;
+  document.getElementById("demo").innerHTML = "Triggered by a " + x.tagName + " element";
 }
 
 
 
-function checkGuess(e) {
-  choiceDiv.addEventListener('mousedown', e => {
-    userGuess = e.currentTarget.getAttribute('data-guessvalue');
-    console.log(userGuess);
-    console.log(pick.answer);
- 
-    if (userGuess !== pick.answer.toString()) {
-      console.log('Finally sir');
-      // time.style.display = 'none'
-      questionSpot.innerHTML = `<h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
-      loseImg()
-  
-    } else {
-      questionSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
-      choiceSpot.innerHTML = `"<img src=${pick.photo}>"`;
-      setTimeout(showQs, 3000)
-      e.preventDefault()
-      // setTimeout(loseImg, 500);
-      // clearTimeout(loser)
-      }
-    })
+// function checkGuess() {
    
-}
+//     choiceDiv.addEventListener('mousedown', e => {
+//     userGuess = e.currentTarget.getAttribute('data-guessvalue')
+//     console.log(userGuess);
+//  })
+  
+ 
+//   // ans.addEventListener('mousedown', e => {
+
+//   //   console.log(e.currentTarget);
+//   // })
+
+//   // choiceDiv.addEventListener('mousedown', e => {
+//   //   userGuess = e.currentTarget.getAttribute('data-guessvalue');
+//   //   console.log(userGuess);
+//   //   console.log(pick.answer);
+ 
+//   //   // if (userGuess !== pick.answer.toString()) {
+//   //   //   console.log('Finally sir');
+//   //   //   // time.style.display = 'none'
+//   //   //   questionSpot.innerHTML = `<h2>Incorrect. The correct answer is ${pick.choice[pick.answer]}</h2>`;
+//   //   //   loseImg()
+  
+//   //   // } else {
+//   //   //   questionSpot.innerHTML = `<h2>Correct! Nice Job</h2>`;
+//   //   //   choiceSpot.innerHTML = `"<img src=${pick.photo}>"`;
+//   //   //   setTimeout(showQs, 3000)
+//   //   //   e.preventDefault()
+//   //   //   // setTimeout(loseImg, 500);
+//   //   //   // clearTimeout(loser)
+//   //   //   }
+//   //   })
+   
+// }
 
 
 function hideStart() {
   startBtn.style.display = 'none';
 }
+startBtn.addEventListener('click', showQs);
 
 
 function loseImg() {
@@ -210,16 +226,16 @@ function loseImg() {
  incorrectPhotos.splice(index, 1)
   console.log(imageSelected);
   choiceSpot.innerHTML = `"<img src=${imageSelected.photo}>"`;
-  setTimeout(showQs, 3000)
+  // setTimeout(showQs, 3000)
 }
 
 function winImg() {
- 
- const index = Math.floor(questions.length );
- const pick = questions[index];
-  console.log(pick);
-  questions.splice(index, 0);
+  index = Math.floor(questions.length - 1);
+  pick = questions[index];
+  questions.splice(index, 2);
   console.log(pick.photo);
+  // questions.splice(index, 0);
+  // console.log(pick.photo);
   choiceSpot.innerHTML = `"<img src=${pick.photo}>"`;
 
 }
